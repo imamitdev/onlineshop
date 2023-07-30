@@ -8,7 +8,8 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title mb-4">Billing Address</h4>
-            <form action="">
+            <form action="{% url 'place_order' %}" method="POST">
+              {% csrf_token %}
               <div class="form-row">
                 <div class="col form-group">
                   <label for="">First Name</label>
@@ -98,7 +99,6 @@
                     <label for="">Order Note</label>
                     <textarea name="order_note" class="form-control" rows="2"></textarea>
                 </div>
-            </form>
           </div>
         </div>
         <!-- card.// -->
@@ -172,12 +172,14 @@
             </table>
             <hr />
 
-            <a href="./place-order.html" class="btn btn-primary btn-block">
+            <button type="submit" class="btn btn-primary btn-block">
               Place Order
-            </a>
+            </button>
             <a href="{% url 'store' %}" class="btn btn-light btn-block"
               >Continue Shopping</a
             >
+            </form>
+
           </div>
           <!-- card-body.// -->
         </div>

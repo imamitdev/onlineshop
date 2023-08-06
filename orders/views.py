@@ -14,7 +14,6 @@ from django.template.loader import render_to_string
 def payments(request):
     if request.method == "POST":
         body = json.loads(request.body)
-        print(body)
         order = Order.objects.get(
             user=request.user, is_ordered=False, order_number=body["orderID"]
         )

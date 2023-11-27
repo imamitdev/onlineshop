@@ -172,7 +172,10 @@ def dashboard(request):
         user_id=request.user.id
     )
     order_count = orders.count()
-    userprofile = UserProfile.objects.get(user_id=request.user.id)
+
+    # Use get_object_or_404 with a default value for UserProfile
+    userprofile = get_object_or_404(UserProfile, user_id=request.user.id, default=None)
+
     context = {
         "order_count": order_count,
         "userprofile": userprofile,
@@ -260,7 +263,8 @@ def my_orders(request):
 
 @login_required(login_url="login")
 def edit_profile(request):
-    userprofile = get_object_or_404(UserProfile, user=request.user)
+    userprofile, created = UserProfile.objects.get_or_create(user=request.user)
+
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = UserProfileForm(
@@ -280,6 +284,7 @@ def edit_profile(request):
         "userprofile": userprofile,
     }
     return render(request, "accounts/edit_profile.html", context)
+
 
 
 @login_required(login_url="login")
